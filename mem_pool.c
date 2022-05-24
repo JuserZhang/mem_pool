@@ -95,7 +95,7 @@ END:
 //释放内存
 int buffer_free(memory_pool_node *buffer)
 {
-	memory_pool_node *node_cur = g_mem_pool[buffer->column].used_header; //将当前节点指向所属内存池使用链表头
+	memory_pool_node *node_cur = NULL; //将当前节点指向所属内存池使用链表头
 	memory_pool_node *node_pre = NULL;
 
 	//从堆中分配的内存直接释放，返回给操作系统
@@ -108,6 +108,7 @@ int buffer_free(memory_pool_node *buffer)
 		return MP_OK;
 	}
 
+	node_cur = g_mem_pool[buffer->column].used_header; 
 	while (node_cur != NULL){
 		if (node_cur != buffer){
 			node_pre = node_cur;
